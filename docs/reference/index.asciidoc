@@ -24,21 +24,23 @@ include::setup/bootstrap-checks-xes.asciidoc[]
 
 include::upgrade.asciidoc[]
 
+include::get-data.asciidoc[]
+
+include::ingest.asciidoc[]
+
+include::mapping.asciidoc[]
+
+include::analysis.asciidoc[]
+
 include::aggregations.asciidoc[]
 
 include::query-dsl.asciidoc[]
 
 include::scripting.asciidoc[]
 
-include::mapping.asciidoc[]
-
-include::analysis.asciidoc[]
-
 include::modules.asciidoc[]
 
 include::index-modules.asciidoc[]
-
-include::ingest.asciidoc[]
 
 include::ilm/index.asciidoc[]
 

@@ -1,0 +1,66 @@
+[[get-data-into-es]]
+= Get data into Elasticsearch
+
+[partintro]
+--
+To search and analyze your data in {es}, you must first store and organize it in
+a way that best serves your goals. This can involve the following processes:
+
+* <<ingest-method, Ingest>>, the process of moving data from one or more
+sources into {es}.
+* <<data-mapping, Mapping>>, the process of defining the types of data you want
+to store in {es}.
+* <<analysis, Analysis>>, the process of changing stored text
+for efficient search retrieval.
+--
+
+
+[[ingest-method]]
+== Choose an ingest method
+**Ingest** is the process of moving data from one or more sources, such as a log
+file or database, into {es}. You can do this by mixing and matching of ingest
+tools, including:
+
+* {beats-ref}[{beats}], open-source data shippers you can install as agents on
+your server. Beats can send data directly to Elasticsearch or Logstash, where
+you can further process and enhance the data.
+* {logstash-ref}[{ls}], an open source data collection engine. You can use
+Logstash to centralize, cleanse, and enrich your data before sending it to {es}.
+Logstash supports a broad range of formats and codes, with many input, filter,
+and output plugins.
+* <<ingest,{es} ingest nodes>>, which you can use to collect and change data in
+{es} before indexing it.
+
+
+[[data-mapping]]
+== Configure data mappings
+**Mapping** is the process of defining the types of data you want to store
+in {es}.
+
+By default, {es} is schema-less, meaning you can JSON documents to an index
+without defining the document's data types in advance. To support this, {es}
+uses simple built-in rules, called dynamic mapping, to automatically guess the
+types of data in a document.
+
+You can also explicitly define an index's mapping. Explicit mapping is important
+if you want to model relationships between data or distinguish between similar
+data types.
+
+See <<mapping>> for more information.
+
+
+[[analyze-text]]
+== Analyze text
+{es} separates text data into two broadtypes: exact values, such as a product
+ID or email address, or full text, such as the body of an email or product
+description.
+
+**Analysis** is the process of changing a full text so you can retrieve it
+during a search. During analysis, {es} uses a set of rules, called an
+<<analysis-analyzers,analyzer>>, to change full text as follows:
+
+* {es} divides the text into individual words, called terms or tokens.
+* {es} then normalizes these tokens. This can include removing punctuation,
+removing suffixes, changing to lowercase, and more.
+
+See <<analysis>> for more information.
