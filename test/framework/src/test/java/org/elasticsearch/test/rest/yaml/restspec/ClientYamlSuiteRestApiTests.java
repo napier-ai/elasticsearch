@@ -72,6 +72,7 @@ public class ClientYamlSuiteRestApiTests extends ESTestCase {
         "      \"url\":\"http://www.elastic.co/guide/en/elasticsearch/reference/master/docs-index_.html\",\n" +
         "      \"description\":\"Creates or updates a document in an index.\"\n" +
         "    },\n" +
+        "    \"stability\":\"stable\",\n" +
         "    \"url\":{\n" +
         "      \"paths\":[\n" +
         "        {\n" +
