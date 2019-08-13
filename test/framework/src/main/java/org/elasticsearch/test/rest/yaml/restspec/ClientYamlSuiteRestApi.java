@@ -67,9 +67,20 @@ public class ClientYamlSuiteRestApi {
     }
 
     void addPath(String path, String[] methods, Set<String> parts) {
+        Objects.requireNonNull(path, name + " API: path must not be null");
+        Objects.requireNonNull(methods, name + " API: methods must not be null");
+        if (methods.length == 0) {
+            throw new IllegalArgumentException(name + " API: methods is empty, at least one method is required");
+        }
+        Objects.requireNonNull(parts, name + " API: parts must not be null");
+        for (String part : parts) {
+            if (path.contains("{" + part + "}") == false) {
+                throw new IllegalArgumentException(name + " API: part [" + part + "] not contained in path [" + path + "]");
+            }
+        }
         boolean add = this.paths.add(new Path(path, methods, parts));
         if (add == false) {
-            throw new IllegalArgumentException("Found duplicate path [" + path + "]");
+            throw new IllegalArgumentException(name + " API: found duplicate path [" + path + "]");
         }
     }
 
@@ -152,17 +163,9 @@ public class ClientYamlSuiteRestApi {
         private final Set<String> parts;
 
         private Path(String path, String[] methods, Set<String> parts) {
-            this.path = Objects.requireNonNull(path, "path must not be null");
-            this.methods = Objects.requireNonNull(methods, "methods must not be null");
-            if (methods.length == 0) {
-                throw new IllegalArgumentException("methods is empty, at least one method is required");
-            }
-            this.parts = Objects.requireNonNull(parts, "parts must not be null");
-            for (String part : parts) {
-                if (path.contains("{" + part + "}") == false) {
-                    throw new IllegalArgumentException("part [" + part + "] not contained in path [" + path + "]");
-                }
-            }
+            this.path = path;
+            this.methods = methods;
+            this.parts = parts;
         }
 
         public String getPath() {

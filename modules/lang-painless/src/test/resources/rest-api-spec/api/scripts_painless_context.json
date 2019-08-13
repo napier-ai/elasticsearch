@@ -1,11 +1,14 @@
 {
   "scripts_painless_context": {
     "stability": "experimental",
-    "methods": ["GET"],
     "url": {
-      "paths": ["/_scripts/painless/_context"],
-      "parts": {
-      },
+      "paths": [
+        {
+          "path": "/_scripts/painless/_context",
+          "methods": ["GET"],
+          "parts": {}
+        }
+      ],
       "params": {
         "context" : {
           "type" : "string",
