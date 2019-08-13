@@ -1,7 +1,7 @@
 {
   "get_script":{
     "documentation":{
-      "url":"http://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html",
+      "url":"https://www.elastic.co/guide/en/elasticsearch/reference/master/modules-scripting.html",
       "description":"Returns a script."
     },
     "stability":"stable",
