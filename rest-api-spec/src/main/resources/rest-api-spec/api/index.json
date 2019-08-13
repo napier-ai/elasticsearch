@@ -10,6 +10,7 @@
         {
           "path":"/{index}/_doc/{id}",
           "methods":[
+            "POST",
             "PUT"
           ],
           "parts":{
@@ -26,8 +27,7 @@
         {
           "path":"/{index}/_doc",
           "methods":[
-            "POST",
-            "PUT"
+            "POST"
           ],
           "parts":{
             "index":{
@@ -39,8 +39,7 @@
         {
           "path":"/{index}/{type}",
           "methods":[
-            "POST",
-            "PUT"
+            "POST"
           ],
           "parts":{
             "index":{
@@ -61,6 +60,7 @@
         {
           "path":"/{index}/{type}/{id}",
           "methods":[
+            "POST",
             "PUT"
           ],
           "parts":{
