@@ -66,7 +66,7 @@ public class ClientYamlSuiteRestApiParserFailingTests extends ESTestCase {
                 "    }," +
                 "    \"body\": null" +
                 "  }" +
-                "}", "ping.json", "Found duplicate path [/pingtwo]");
+                "}", "ping.json", "ping API: found duplicate path [/pingtwo]");
     }
 
     public void testBrokenSpecShouldThrowUsefulExceptionWhenParsingFailsOnParams() throws Exception {
