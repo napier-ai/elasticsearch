@@ -35,7 +35,6 @@ public class ClientYamlSuiteRestApiParserFailingTests extends ESTestCase {
                "  \"ping\": {" +
                "    \"documentation\": \"http://www.elasticsearch.org/guide/\"," +
                "    \"stability\": \"stable\",\n" +
-               "    \"methods\": [\"PUT\", \"PUT\"]," +
                "    \"url\": {" +
                "      \"paths\": [{\"path\":\"/\", \"parts\": {}, \"methods\": [\"PUT\", \"PUT\"]}]," +
                "      \"params\": {" +
@@ -53,12 +52,9 @@ public class ClientYamlSuiteRestApiParserFailingTests extends ESTestCase {
                 "  \"ping\": {" +
                 "    \"documentation\": \"http://www.elasticsearch.org/guide/\"," +
                 "    \"stability\": \"stable\",\n" +
-                "    \"methods\": [\"PUT\"]," +
                 "    \"url\": {" +
                 "      \"paths\": [" +
                 "         {\"path\":\"/pingtwo\", \"methods\": [\"PUT\"]}, " + "{\"path\":\"/pingtwo\", \"methods\": [\"PUT\"]}]," +
-                "      \"parts\": {" +
-                "      }," +
                 "      \"params\": {" +
                 "        \"type\" : \"boolean\",\n" +
                 "        \"description\" : \"Whether specified concrete indices should be ignored when unavailable (missing or closed)\"" +
@@ -70,11 +66,11 @@ public class ClientYamlSuiteRestApiParserFailingTests extends ESTestCase {
     }
 
     public void testBrokenSpecShouldThrowUsefulExceptionWhenParsingFailsOnParams() throws Exception {
-        parseAndExpectFailure(BROKEN_SPEC_PARAMS, "ping.json", "Expected params field in rest api definition to contain objects");
+        parseAndExpectFailure(BROKEN_SPEC_PARAMS, "ping.json", "Expected [params] field in rest api definition to contain an object");
     }
 
     public void testBrokenSpecShouldThrowUsefulExceptionWhenParsingFailsOnParts() throws Exception {
-        parseAndExpectFailure(BROKEN_SPEC_PARTS, "ping.json", "Expected parts field in rest api definition to contain an object");
+        parseAndExpectFailure(BROKEN_SPEC_PARTS, "ping.json", "Expected [parts] field in rest api definition to contain an object");
     }
 
     public void testSpecNameMatchesFilename() throws Exception {
@@ -94,13 +90,12 @@ public class ClientYamlSuiteRestApiParserFailingTests extends ESTestCase {
             "  \"ping\": {" +
             "    \"documentation\": \"http://www.elasticsearch.org/guide/\"," +
             "    \"stability\": \"stable\",\n" +
-            "    \"methods\": [\"HEAD\"]," +
             "    \"url\": {" +
-            "      \"paths\": [{\"path\": \"path\", \"methods\": [\"HEAD\"]}]," +
-            "      \"params\": {" +
-            "        \"type\" : \"boolean\",\n" +
-            "        \"description\" : \"Whether specified concrete indices should be ignored when unavailable (missing or closed)\"\n" +
-            "      }" +
+            "      \"paths\": [{\"path\": \"path\", \"methods\": [\"HEAD\"]}]" +
+            "    }," +
+            "    \"params\": {" +
+            "      \"type\" : \"boolean\",\n" +
+            "      \"description\" : \"Whether specified concrete indices should be ignored when unavailable (missing or closed)\"\n" +
             "    }," +
             "    \"body\": null" +
             "  }" +
@@ -111,7 +106,6 @@ public class ClientYamlSuiteRestApiParserFailingTests extends ESTestCase {
             "  \"ping\": {" +
             "    \"documentation\": \"http://www.elasticsearch.org/guide/\"," +
             "    \"stability\": \"stable\",\n" +
-            "    \"methods\": [\"HEAD\"]," +
             "    \"url\": {" +
             "      \"paths\": [{ \"path\":\"/\", \"parts\": { \"type\":\"boolean\",}}]," +
             "      \"params\": {\n" +
@@ -123,5 +117,4 @@ public class ClientYamlSuiteRestApiParserFailingTests extends ESTestCase {
             "    \"body\": null" +
             "  }" +
             "}";
-
 }

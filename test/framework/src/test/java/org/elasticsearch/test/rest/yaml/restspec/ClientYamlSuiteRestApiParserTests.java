@@ -132,7 +132,6 @@ public class ClientYamlSuiteRestApiParserTests extends AbstractClientYamlTestFra
             "  \"count\": {\n" +
             "    \"documentation\": \"whatever\",\n" +
             "    \"stability\": \"stable\",\n" +
-            "    \"methods\": [ \"GET\", \"POST\" ],\n" +
             "    \"url\": {\n" +
             "      \"paths\": [ \n" +
             "        {\n" +

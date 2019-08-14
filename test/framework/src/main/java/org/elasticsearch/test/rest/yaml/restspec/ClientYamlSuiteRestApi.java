@@ -42,11 +42,10 @@ public class ClientYamlSuiteRestApi {
     private Set<Path>  paths = new LinkedHashSet<>();
     private Map<String, Boolean> params = new HashMap<>();
     private Body body = Body.NOT_SUPPORTED;
-    private Stability stability = Stability.UNKNOWN;
+    private Stability stability;
 
-    public enum Stability
-    {
-        UNKNOWN, EXPERIMENTAL, BETA, STABLE
+    public enum Stability {
+        EXPERIMENTAL, BETA, STABLE
     }
 
     public enum Body {
@@ -117,7 +116,7 @@ public class ClientYamlSuiteRestApi {
     }
 
     public void setStability(String stability) {
-        this.stability = ClientYamlSuiteRestApi.Stability.valueOf(stability.toUpperCase(Locale.ROOT));
+        this.stability = Stability.valueOf(stability.toUpperCase(Locale.ROOT));
     }
 
     public Stability getStability() { return this.stability; }
