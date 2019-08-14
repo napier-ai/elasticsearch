@@ -18,6 +18,7 @@
  */
 package org.elasticsearch.test.rest.yaml.restspec;
 
+import org.elasticsearch.common.ParsingException;
 import org.elasticsearch.common.xcontent.XContentParser;
 import org.elasticsearch.common.xcontent.yaml.YamlXContent;
 import org.elasticsearch.test.ESTestCase;
@@ -31,7 +32,7 @@ import static org.hamcrest.Matchers.containsString;
 public class ClientYamlSuiteRestApiParserFailingTests extends ESTestCase {
 
     public void testDuplicateMethods() throws Exception {
-       parseAndExpectFailure("{\n" +
+       parseAndExpectParsingException("{\n" +
                "  \"ping\": {" +
                "    \"documentation\": \"http://www.elasticsearch.org/guide/\"," +
                "    \"stability\": \"stable\",\n" +
@@ -44,11 +45,11 @@ public class ClientYamlSuiteRestApiParserFailingTests extends ESTestCase {
                "    }," +
                "    \"body\": null" +
                "  }" +
-               "}", "ping.json", "Found duplicate method [PUT]");
+               "}", "ping.json", "ping API: found duplicate method [PUT]");
     }
 
     public void testDuplicatePaths() throws Exception {
-        parseAndExpectFailure("{\n" +
+        parseAndExpectIllegalArgumentException("{\n" +
                 "  \"ping\": {" +
                 "    \"documentation\": \"http://www.elasticsearch.org/guide/\"," +
                 "    \"stability\": \"stable\",\n" +
@@ -66,18 +67,27 @@ public class ClientYamlSuiteRestApiParserFailingTests extends ESTestCase {
     }
 
     public void testBrokenSpecShouldThrowUsefulExceptionWhenParsingFailsOnParams() throws Exception {
-        parseAndExpectFailure(BROKEN_SPEC_PARAMS, "ping.json", "Expected [params] field in rest api definition to contain an object");
+        parseAndExpectParsingException(BROKEN_SPEC_PARAMS, "ping.json", "ping API: expected [params] field in rest api definition to contain an object");
     }
 
     public void testBrokenSpecShouldThrowUsefulExceptionWhenParsingFailsOnParts() throws Exception {
-        parseAndExpectFailure(BROKEN_SPEC_PARTS, "ping.json", "Expected [parts] field in rest api definition to contain an object");
+        parseAndExpectParsingException(BROKEN_SPEC_PARTS, "ping.json", "ping API: expected [parts] field in rest api definition to contain an object");
     }
 
     public void testSpecNameMatchesFilename() throws Exception {
-        parseAndExpectFailure("{\"ping\":{}}", "not_matching.json", "API [ping] should have the same name as its file [not_matching.json]");
+        parseAndExpectIllegalArgumentException("{\"ping\":{}}", "not_matching.json", "API [ping] should have " +
+            "the same name as its file [not_matching.json]");
     }
 
-    private void parseAndExpectFailure(String brokenJson, String location, String expectedErrorMessage) throws Exception {
+    private void parseAndExpectParsingException(String brokenJson, String location, String expectedErrorMessage) throws Exception {
+        XContentParser parser = createParser(YamlXContent.yamlXContent, brokenJson);
+        ClientYamlSuiteRestApiParser restApiParser = new ClientYamlSuiteRestApiParser();
+
+        ParsingException e = expectThrows(ParsingException.class, () -> restApiParser.parse(location, parser));
+        assertThat(e.getMessage(), containsString(expectedErrorMessage));
+    }
+
+    private void parseAndExpectIllegalArgumentException(String brokenJson, String location, String expectedErrorMessage) throws Exception {
         XContentParser parser = createParser(YamlXContent.yamlXContent, brokenJson);
         ClientYamlSuiteRestApiParser restApiParser = new ClientYamlSuiteRestApiParser();
 

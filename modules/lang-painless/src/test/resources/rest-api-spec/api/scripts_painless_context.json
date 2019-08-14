@@ -8,12 +8,12 @@
           "methods": ["GET"],
           "parts": {}
         }
-      ],
-      "params": {
-        "context" : {
-          "type" : "string",
-          "description" : "Select a specific context to retrieve API information about"
-        }
+      ]
+    },
+    "params": {
+      "context" : {
+        "type" : "string",
+        "description" : "Select a specific context to retrieve API information about"
       }
     }
   }
