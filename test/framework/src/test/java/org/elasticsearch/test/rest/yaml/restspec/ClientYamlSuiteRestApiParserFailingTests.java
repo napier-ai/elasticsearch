@@ -67,11 +67,13 @@ public class ClientYamlSuiteRestApiParserFailingTests extends ESTestCase {
     }
 
     public void testBrokenSpecShouldThrowUsefulExceptionWhenParsingFailsOnParams() throws Exception {
-        parseAndExpectParsingException(BROKEN_SPEC_PARAMS, "ping.json", "ping API: expected [params] field in rest api definition to contain an object");
+        parseAndExpectParsingException(BROKEN_SPEC_PARAMS, "ping.json",
+            "ping API: expected [params] field in rest api definition to contain an object");
     }
 
     public void testBrokenSpecShouldThrowUsefulExceptionWhenParsingFailsOnParts() throws Exception {
-        parseAndExpectParsingException(BROKEN_SPEC_PARTS, "ping.json", "ping API: expected [parts] field in rest api definition to contain an object");
+        parseAndExpectParsingException(BROKEN_SPEC_PARTS, "ping.json",
+            "ping API: expected [parts] field in rest api definition to contain an object");
     }
 
     public void testSpecNameMatchesFilename() throws Exception {
