@@ -1,5 +1,5 @@
 [[modules-cross-cluster-search]]
-== {ccs-cap}
+= {ccs-cap}
 
 The _{ccs}_ feature allows any node to act as a federated client across
 multiple clusters. A {ccs} node won't join the remote cluster, instead
@@ -8,7 +8,8 @@ federated search requests. For details on communication and compatibility
 between different clusters, see <<modules-remote-clusters>>.
 
 [float]
-=== Using {ccs}
+[[
+== Using {ccs}
 
 {ccs-cap} requires <<modules-remote-clusters,configuring remote clusters>>.
 
@@ -298,6 +299,27 @@ are requested as part of field collapsing, this strategy is not supported hence
 network round-trips cannot be minimized and the following strategy is used
 instead.
 
+// Rewrite
+. A coordinating node receives the cross-cluster search API request.
+
+https://drive.google.com/file/d/1n1U3fqEp3zuJLBpmunYRoSv2hZ2WEAA9/view
+[[Image 9]]
+
+. The coordinating node fetches shard and index information from each remote
+cluster.
+
+[[Image 10]]
+
+. Each cluster performs the search request independently, reducing and fetching
+the results. Each cluster then sends its results to the coordinating node.
+
+[[Image 11]]
+
+. After receiving results from each cluster, the coordinating node performs a
+final reduction and returns the final results in the search API response.
+
+[[Image 11]]
+
 - the CCS coordinating node sends a <<search-shards,search shards>> request to
 each remote cluster, in order to collect information about their corresponding
 remote indices involved in the search request and the shards where their data
@@ -310,6 +332,40 @@ This strategy may be beneficial whenever there is very low network latency
 between the CCS coordinating node and the remote clusters involved, as it
 treats all shards the same, at the cost of sending many requests to each remote
 cluster, which is problematic in presence of network latency.
+
+// Rewrite
+
+. A coordinating node receives the cross-cluster search API request.
+
+https://drive.google.com/file/d/1n1U3fqEp3zuJLBpmunYRoSv2hZ2WEAA9/view
+[[Image 14]]
+
+. The coordinating node sends a <<search-shards,search shards>> API request to each remote cluster.
+This request returns information about information about their corresponding
+remote indices involved in the search request and the shards where their data
+is located to the node.
+
+[[Image 15]]
+
+. The coordinating node sends one request to each shard involved, each shard executes the query 
+
+[[Image 16]]
+
+. each shard executes the query and returns its own results.
+
+[[Image 17]]
+
+. The coordinating node fetches the results from each shard, which are reduced.
+
+[[Image 17]]
+
+ which are then reduced (and fetched, depending on the
+<<request-body-search-search-type, search type>>) by the CCS coordinating node.
+
+. The coordinating node performs a
+final reduction and returns the final results in the search API response.
+
+[[Image 18]]
 
 The <<search-request-body, search API>> supports the `ccs_minimize_roundtrips`
 parameter, which defaults to `true` and can be set to `false` in case
